@@ -1,0 +1,5 @@
+
+.icon-author:before { content: '\e800'; } /* '' */
+.icon-date:before { content: '\e801'; } /* '' */
+.icon-views:before { content: '\e802'; } /* '' */
+.icon-search:before { content: '\e803'; } /* '' */
