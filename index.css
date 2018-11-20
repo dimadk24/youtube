@@ -31,13 +31,26 @@
 }
 
 .videos {
-    display: flex;
     margin-top: 20px;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
-.video__title {
+.inner__videos {
+    display: flex;
+    transition-duration: 300ms;
+}
+
+.video {
+    flex-shrink: 0;
+    margin-right: 50px;
     text-align: center;
+    width: 320px;
+}
+
+img.video__preview {
+    width: 100%;
+    max-width: 320px;
+    max-height: 180px;
 }
 
 .video__param {
@@ -52,6 +65,7 @@
 .video__description {
     width: 90%;
     margin: 0 auto;
+    text-align: left;
 }
 
 .dots {
@@ -68,7 +82,7 @@
     border: 1px solid black;
 }
 
-img.video__preview {
-    width: 320px;
-    height: 180px;
+.dot--active {
+    background-color: #2239ce;
+    border: none;
 }
