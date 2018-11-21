@@ -47,6 +47,17 @@
     width: 320px;
 }
 
+a.video__title {
+    color: black;
+    text-decoration: none;
+    transition-duration: 100ms;
+}
+
+a.video__title:hover,
+a.video__title:active {
+    color: #0722b1;
+}
+
 img.video__preview {
     width: 100%;
     max-width: 320px;
@@ -75,14 +86,20 @@ img.video__preview {
 
 .dot {
     display: inline-block;
-    width: 13px;
-    height: 13px;
+    width: 19px;
+    height: 19px;
     background-color: white;
     border-radius: 50%;
     border: 1px solid black;
+    color: transparent;
+    transition-duration: 100ms;
 }
 
 .dot--active {
-    background-color: #2239ce;
+    background-color: #c33232;
     border: none;
+}
+
+.dots--swiping > .dot{
+    color: #19af2d
 }
