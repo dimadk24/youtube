@@ -4,8 +4,10 @@
   "description": "Rolling Scopes School youtube task",
   "main": "src/index.js",
   "scripts": {
-    "start": "browser-sync start --server \"src\" --files \"src/*\"",
-    "deploy": "gh-pages -d src",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,12 +21,18 @@
   },
   "homepage": "https://github.com/DimaDK24/youtube#readme",
   "devDependencies": {
-    "browser-sync": "^2.26.3",
+    "clean-webpack-plugin": "^1.0.0",
+    "css-loader": "^1.0.1",
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-loader": "^2.1.1",
     "eslint-plugin-import": "^2.14.0",
     "gh-pages": "^2.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.23.1",
     "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "webpack-merge": "^4.1.4"
   }
 }
