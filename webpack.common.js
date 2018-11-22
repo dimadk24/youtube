@@ -29,10 +29,16 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {
-          cache: true,
-        },
+        use: [
+          'babel-loader',
+          {
+            loader: 'eslint-loader',
+            options: {
+              cache: true,
+            },
+          },
+        ],
+
       },
     ],
   },
