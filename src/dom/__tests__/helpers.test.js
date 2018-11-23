@@ -63,6 +63,20 @@ describe('appendChildren', () => {
     expect(elem.childElementCount).toBe(childrenCount);
     for (let i = 0; i < childrenCount; i += 1) expect(elem.children[i]).toBe(children[i]);
   });
+
+  it('should raise nice error with debug text if undefined passed as children', () => {
+    const elem = document.createElement('p');
+    expect(() => {
+      appendChildren(elem, [undefined]);
+    }).toThrow('undefined');
+  });
+
+  it('should raise nice error with debug text if int passed as children', () => {
+    const elem = document.createElement('p');
+    expect(() => {
+      appendChildren(elem, [123]);
+    }).toThrow('123');
+  });
 });
 
 describe('setAttributes', () => {

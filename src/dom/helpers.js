@@ -21,8 +21,9 @@ function createIcon(name) {
 }
 
 function appendChildren(elem, children) {
-  children.forEach((child) => {
-    elem.appendChild(child);
+  children.forEach((child, index) => {
+    if (child instanceof Node) elem.appendChild(child);
+    else throw new Error(`children[${index}] is not a node, it's a: ${child}`);
   });
 }
 
