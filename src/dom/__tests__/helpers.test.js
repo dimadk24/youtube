@@ -22,8 +22,14 @@ describe('createElementWithClasses', () => {
     expect(elem.classList.contains('second')).toBeTruthy();
   });
 
-  it('should raise error if element name is bad', () => {
+  it('should raise error if element name is undefined', () => {
     expect(createElementWithClasses).toThrow();
+  });
+
+  it('should raise error if element name is not string', () => {
+    expect(() => {
+      createElementWithClasses(123);
+    }).toThrow();
   });
 });
 
