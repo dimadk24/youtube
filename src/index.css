@@ -17,7 +17,7 @@
 }
 
 .search-bar > input {
-    width: 100%;
+    width: 80%;
     padding: 5px 5px 5px 32px;
     border-radius: 7px;
     border: 1px solid black;
@@ -28,6 +28,22 @@
     top: 5px;
     left: 5px;
     pointer-events: none;
+}
+
+.search-button {
+    margin-left: 10px;
+    padding: 5px 16px;
+    border-radius: 7px;
+    border: 1px solid black;
+    font-weight: 700;
+    background-color: #de1212;
+    color: white;
+    cursor: pointer;
+    transition-duration: 150ms;
+}
+
+button.search-button:hover {
+    background-color: red;
 }
 
 .videos {
