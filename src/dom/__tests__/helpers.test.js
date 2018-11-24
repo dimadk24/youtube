@@ -18,8 +18,8 @@ describe('createElementWithClasses', () => {
 
   it('should set classes on created node', () => {
     const elem = createElementWithClasses('p', 'first', 'second');
-    expect(elem.classList.contains('first')).toBeTruthy();
-    expect(elem.classList.contains('second')).toBeTruthy();
+    expect(elem.classList).toContain('first');
+    expect(elem.classList).toContain('second');
   });
 
   it('should raise error if element name is undefined', () => {
