@@ -110,6 +110,7 @@ img.video__preview {
     border: 1px solid black;
     color: transparent;
     transition-duration: 100ms;
+    cursor: pointer;
 }
 
 .dot:last-child {
