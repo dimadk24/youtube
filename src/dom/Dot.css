@@ -7,7 +7,7 @@
     border-radius: 50%;
     border: 1px solid black;
     color: transparent;
-    transition-duration: 100ms;
+    transition-duration: 300ms;
     cursor: pointer;
 }
 
@@ -18,4 +18,8 @@
 .dot--active {
     background-color: #c33232;
     border: none;
+}
+
+.videos--swiping .dot{
+    color: #19af2d
 }

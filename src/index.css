@@ -100,10 +100,6 @@ img.video__preview {
     text-align: center;
 }
 
-.dots--swiping > .dot{
-    color: #19af2d
-}
-
 @media (max-width: 620px) {
     .search-bar {
         width: 90%;

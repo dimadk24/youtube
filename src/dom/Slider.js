@@ -25,7 +25,7 @@ class Slider extends Component {
     this.videoWidth = 320;
     this.videoMargin = 50;
     this.activeVideo = 0;
-    this.isDragging = false;
+    this.setDragging(false);
   }
 
   createDots(number) {
@@ -127,7 +127,13 @@ class Slider extends Component {
 
   startDrag(e) {
     this.dragEventX = getDragEventX(e);
-    this.isDragging = true;
+    this.setDragging(true);
+  }
+
+  setDragging(value) {
+    if (value) this.element.classList.add('videos--swiping');
+    else this.element.classList.remove('videos--swiping');
+    this.isDragging = value;
   }
 
   move(e) {
@@ -158,7 +164,7 @@ class Slider extends Component {
         else this.setActiveVideo(this.activeVideo + offsetCount);
       }
       this.dragEventX = 0;
-      this.isDragging = false;
+      this.setDragging(false);
     }
   }
 
