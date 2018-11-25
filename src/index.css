@@ -58,9 +58,7 @@ button.search-button:hover {
 
 .video {
     flex-shrink: 0;
-    margin-right: 50px;
     text-align: center;
-    width: 320px;
 }
 
 a.video__title {
