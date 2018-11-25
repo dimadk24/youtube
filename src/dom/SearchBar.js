@@ -7,7 +7,7 @@ import {
 import Component from './Component';
 
 function createSearchLabel() {
-  const label = createElementWithClasses('label', 'hidden');
+  const label = createElementWithClasses('label', 'visually-hidden');
   label.setAttribute('for', 'search');
   label.innerText = 'Enter your search text';
   return label;

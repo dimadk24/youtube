@@ -4,7 +4,7 @@ describe('createSearchLabel', () => {
   it('should create hidden search label', () => {
     const label = createSearchLabel();
     expect(label.tagName.toLowerCase()).toBe('label');
-    expect(label.classList).toContain('hidden');
+    expect(label.classList).toContain('visually-hidden');
     expect(label.getAttributeNames()).toContain('for');
   });
 
