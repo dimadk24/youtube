@@ -35,4 +35,22 @@ describe('Dot', () => {
     expect(dot.element.classList).toHaveLength(1);
     expect(dot.element.classList.item(0)).toBe(classBeforeSettingActive);
   });
+
+  it('should be hidden and have 2 classes and field', () => {
+    const dot = new Dot(2);
+    expect(dot.hidden).toBeFalsy();
+    dot.hide();
+    expect(dot.hidden).toBeTruthy();
+    expect(dot.element.classList).toHaveLength(2);
+  });
+
+  it('should be visible and have 1 class (the same it has before hide)', () => {
+    const dot = new Dot(1);
+    const classBeforeHide = dot.element.classList.item(0);
+    dot.hide();
+    dot.show();
+    expect(dot.hidden).toBeFalsy();
+    expect(dot.element.classList).toHaveLength(1);
+    expect(dot.element.classList.item(0)).toBe(classBeforeHide);
+  });
 });
