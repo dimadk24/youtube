@@ -86,19 +86,19 @@ class Slider extends Component {
     if (windowWidth > 600 && windowWidth < 1000) {
       this.setVideosMargin(50);
       this.setVideosWidth((videosWrapperWidth - 50) / 2);
-      this.setMaxVideoIndex(6);
+      this.setMaxVideoIndex(14);
     } else if (windowWidth <= 600) {
       this.setVideosMargin(videosWrapperWidth * 0.1);
       this.setVideosWidth(videosWrapperWidth);
-      this.setMaxVideoIndex(7);
+      this.setMaxVideoIndex(15);
     } else if (windowWidth >= 1000 && windowWidth < 1300) {
       this.setVideosMargin(50);
       this.setVideosWidth((videosWrapperWidth - 100) / 3);
-      this.setMaxVideoIndex(5);
+      this.setMaxVideoIndex(13);
     } else if (windowWidth >= 1300) {
       this.setVideosMargin(60);
       this.setVideosWidth((videosWrapperWidth - 180) / 4);
-      this.setMaxVideoIndex(4);
+      this.setMaxVideoIndex(12);
     }
     this.updateVideosOffset();
   }
