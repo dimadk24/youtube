@@ -3,7 +3,7 @@ import {
   createDivWithClasses,
   createElementWithClasses,
   createIcon,
-  setAttributes,
+  setAttributes, toJS, toCSS,
 } from './helpers';
 import Component from './Component';
 
@@ -55,17 +55,32 @@ class Video extends Component {
     const paramsElements = createParams(video.author, video.date, video.views);
     const description = createDescription(video.description);
     appendChildren(this.element, [title, preview, ...paramsElements, description]);
-    this.width = width;
-    this.margin = margin;
+    this.setWidth(width[0], width[1]);
+    this.setMargin(margin[0], margin[1]);
   }
 
-  set width(value) {
-    this.element.style.width = `${value}px`;
+  setWidth(width, type) {
+    this.element.style.width = toCSS(width, type);
   }
 
-  set margin(value) {
-    this.element.style.marginRight = `${value}px`;
+  setMargin(margin, type) {
+    this.element.style.marginRight = toCSS(margin, type);
+  }
+
+  getWidth() {
+    return toJS(this.element.style.width);
+  }
+
+  getMargin() {
+    return toJS(this.element.style.marginRight);
   }
 }
 
 export default Video;
+export {
+  createVideoParam,
+  createParams,
+  createDescription,
+  createPreview,
+  createTitle,
+};
