@@ -18,6 +18,7 @@
 
 .search-bar > input {
     width: 80%;
+    min-width: 170px;
     padding: 5px 5px 5px 32px;
     border-radius: 7px;
     border: 1px solid black;
@@ -123,4 +124,16 @@ img.video__preview {
 
 .dots--swiping > .dot{
     color: #19af2d
+}
+
+@media (max-width: 620px) {
+    .search-bar {
+        width: 90%;
+    }
+}
+
+@media (max-width: 420px) {
+    .search-bar > input {
+        width: 70%;
+    }
 }
