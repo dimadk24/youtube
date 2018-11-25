@@ -142,7 +142,7 @@ class Slider extends Component {
       const sign = Math.sign(diff);
       if (
         (this.activeVideo === 0 && sign < 0)
-        || (this.activeVideo === this.maxIndex && sign > 0)
+        || (this.activeVideo + 1 === this.maxIndex && sign > 0)
       ) {
         this.updateVideosOffset(diff / 2);
       } else this.updateVideosOffset(diff);
@@ -156,7 +156,7 @@ class Slider extends Component {
       const sign = Math.sign(diff);
       if ((Math.abs(diff) <= this.videoWidth / 2)
         || (this.activeVideo === 0 && sign > 0)
-        || (this.activeVideo === this.maxIndex && sign < 0)) {
+        || (this.activeVideo + 1 === this.maxIndex && sign < 0)) {
         this.setActiveVideo(this.activeVideo);
       } else {
         const offsetCount = Math.floor(Math.abs(diff / this.videoWidth));
@@ -175,7 +175,7 @@ class Slider extends Component {
   setMaxVideoIndex(value) {
     this.maxIndex = value;
     this.dots.forEach((dot, index) => {
-      if (index > value) {
+      if (index >= value) {
         dot.hide();
         if (dot.active) dot.setInactive();
       } else if (dot.hidden) dot.show();
