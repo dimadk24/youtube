@@ -19,6 +19,11 @@
   "bugs": {
     "url": "https://github.com/DimaDK24/youtube/issues"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.css$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  },
   "homepage": "https://github.com/DimaDK24/youtube#readme",
   "devDependencies": {
     "@babel/core": "^7.1.6",
