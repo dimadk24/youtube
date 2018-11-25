@@ -63,6 +63,7 @@ button.search-button:hover {
 
 a.video__title {
     display: block;
+    min-height: 37px;
     color: black;
     text-decoration: none;
     transition-duration: 100ms;
@@ -93,6 +94,7 @@ img.video__preview {
     width: 90%;
     margin: 0 auto;
     text-align: left;
+    overflow: hidden;
 }
 
 .dots {
