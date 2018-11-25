@@ -29,7 +29,7 @@ function createParams(author, date, views) {
 function createTitle(titleText, link) {
   const title = createElementWithClasses('a', 'video__title');
   title.innerText = titleText;
-  setAttributes(title, { href: link });
+  setAttributes(title, { href: link, target: '_blank', rel: 'noopener noreferrer' });
   return title;
 }
 
