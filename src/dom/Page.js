@@ -29,6 +29,7 @@ function convertVideos(youtubeVideos) {
     const { snippet } = video;
     return {
       id: video.id.videoId,
+      link: `https://youtube.com/watch?v=${video.id.videoId}`,
       title: snippet.title,
       preview: snippet.thumbnails.medium.url,
       author: snippet.channelTitle,

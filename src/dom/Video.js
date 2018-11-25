@@ -26,10 +26,10 @@ function createParams(author, date, views) {
   return paramsElements;
 }
 
-function createTitle(titleText) {
+function createTitle(titleText, link) {
   const title = createElementWithClasses('a', 'video__title');
   title.innerText = titleText;
-  setAttributes(title, { href: '#' });
+  setAttributes(title, { href: link });
   return title;
 }
 
@@ -51,7 +51,7 @@ function createDescription(descriptionText) {
 class Video extends Component {
   constructor(video, width, margin) {
     super('section', 'video');
-    const title = createTitle(video.title);
+    const title = createTitle(video.title, video.link);
     const preview = createPreview(video.preview);
     const paramsElements = createParams(video.author, video.date, video.views);
     const description = createDescription(video.description);
