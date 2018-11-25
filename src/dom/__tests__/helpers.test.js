@@ -2,7 +2,7 @@ import {
   appendChildren,
   createDivWithClasses,
   createElementWithClasses,
-  createIcon, setAttributes,
+  createIcon, setAttributes, toCSS, toJS,
 } from '../helpers';
 
 describe('createElementWithClasses', () => {
@@ -98,5 +98,37 @@ describe('setAttributes', () => {
     expect(elem.getAttribute('type')).toBe('text');
     expect(elem.getAttribute('placeholder')).toBe('test');
     expect(elem.getAttribute('maxlength')).toBe('10');
+  });
+});
+
+describe('toCSS', () => {
+  it('should convert js px length to css', () => {
+    const number = 300;
+    const type = 'px';
+    const css = toCSS(number, type);
+    expect(css).toBe('300px');
+  });
+
+  it('should convert js % length to css', () => {
+    const number = 300;
+    const type = '%';
+    const css = toCSS(number, type);
+    expect(css).toBe('300%');
+  });
+});
+
+describe('toJS', () => {
+  it('should convert css px length to js length and type', () => {
+    const cssLength = '320px';
+    const [length, type] = toJS(cssLength);
+    expect(length).toBe(320);
+    expect(type).toBe('px');
+  });
+
+  it('should convert css % length to js length and type', () => {
+    const cssLength = '320%';
+    const [length, type] = toJS(cssLength);
+    expect(length).toBe(320);
+    expect(type).toBe('%');
   });
 });
