@@ -62,6 +62,7 @@ button.search-button:hover {
 }
 
 a.video__title {
+    display: block;
     color: black;
     text-decoration: none;
     transition-duration: 100ms;
