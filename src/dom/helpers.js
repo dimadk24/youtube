@@ -36,6 +36,11 @@ function toNumber(cssLength) {
   return parseInt(cssLength.slice(0, -2), 10);
 }
 
+function getDragEventX(e) {
+  const unifiedEvent = e.changedTouches ? e.changedTouches[0] : e;
+  return unifiedEvent.clientX;
+}
+
 export {
   createElementWithClasses,
   createDivWithClasses,
@@ -44,4 +49,5 @@ export {
   setAttributes,
   toPx,
   toNumber,
+  getDragEventX,
 };

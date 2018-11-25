@@ -1,4 +1,4 @@
-import { appendChildren, createDivWithClasses } from './helpers';
+import { appendChildren, createDivWithClasses, getDragEventX } from './helpers';
 import Video from './Video';
 import Dot from './Dot';
 import Component from './Component';
@@ -13,6 +13,7 @@ class Slider extends Component {
     const dots = this.createDots(videos.length);
     appendChildren(this.element, [this.videosWrapper, dots]);
     this.bindEvents();
+    this.onResize();
   }
 
   setInitialVideoParams() {
@@ -33,11 +34,29 @@ class Slider extends Component {
   }
 
   setActiveVideo(index) {
-    const videoOverallWidth = this.videoWidth + this.videoMargin;
-    this.videosWrapper.style.transform = `translate(${-videoOverallWidth * index}px)`;
-    this.dots[this.activeVideo].setInactive();
-    this.dots[index].setActive();
+    if (index < 0 || index > this.maxIndex) return;
+    this.setDotAsInactive(this.activeVideo);
+    this.setDotAsActive(index);
     this.activeVideo = index;
+    this.updateVideosOffset();
+  }
+
+  setDotAsInactive(index) {
+    this.dots[index].setInactive();
+  }
+
+  setDotAsActive(index) {
+    this.dots[index].setActive();
+  }
+
+  updateVideosOffset() {
+    if (this.activeVideo > this.maxIndex) this.activeVideo = this.maxIndex;
+    const offset = this.getVideoOverallWidth() * this.activeVideo;
+    this.videosWrapper.style.transform = `translate(-${offset}px)`;
+  }
+
+  getVideoOverallWidth() {
+    return this.videoWidth + this.videoMargin;
   }
 
   setVideosWidth(value) {
@@ -50,27 +69,64 @@ class Slider extends Component {
     this.videos.forEach(video => video.setMargin(value));
   }
 
-  calculateResizements() {
+  onResize() {
+    this.setTransitionDuration('0s');
     const windowWidth = window.innerWidth;
     const videosWrapperWidth = windowWidth * 0.9;
     if (windowWidth > 600 && windowWidth < 1000) {
       this.setVideosMargin(50);
       this.setVideosWidth((videosWrapperWidth - 50) / 2);
+      this.setMaxVideoIndex(6);
     } else if (windowWidth <= 600) {
       this.setVideosMargin(videosWrapperWidth * 0.1);
       this.setVideosWidth(videosWrapperWidth);
+      this.setMaxVideoIndex(7);
     } else if (windowWidth >= 1000 && windowWidth < 1300) {
       this.setVideosMargin(50);
       this.setVideosWidth((videosWrapperWidth - 100) / 3);
+      this.setMaxVideoIndex(5);
     } else if (windowWidth >= 1300) {
       this.setVideosMargin(60);
       this.setVideosWidth((videosWrapperWidth - 180) / 4);
+      this.setMaxVideoIndex(4);
     }
+    this.updateVideosOffset();
   }
 
   bindEvents() {
-    window.addEventListener('resize', this.calculateResizements.bind(this));
-    this.calculateResizements();
+    window.addEventListener('resize', this.onResize.bind(this));
+    this.element.addEventListener('mousedown', this.startDrag.bind(this));
+    this.element.addEventListener('touchstart', this.startDrag.bind(this));
+    this.element.addEventListener('mouseup', this.endDrag.bind(this));
+    this.element.addEventListener('touchend', this.endDrag.bind(this));
+  }
+
+  startDrag(e) {
+    e.preventDefault();
+    this.dragEventX = getDragEventX(e);
+  }
+
+  endDrag(e) {
+    this.setTransitionDuration('300ms');
+    const diff = getDragEventX(e) - this.dragEventX;
+    const sign = Math.sign(diff);
+    if (Math.abs(diff) > this.videoWidth) {
+      const offsetCount = Math.floor(Math.abs(diff / this.videoWidth));
+      if (sign > 0) this.setActiveVideo(this.activeVideo - offsetCount);
+      else this.setActiveVideo(this.activeVideo + offsetCount);
+    }
+  }
+
+  setTransitionDuration(value) {
+    this.videosWrapper.style.transitionDuration = value;
+  }
+
+  setMaxVideoIndex(value) {
+    this.maxIndex = value;
+    this.dots.forEach((dot, index) => {
+      if (index > value) dot.hide();
+      else if (dot.hidden) dot.show();
+    });
   }
 }
 
