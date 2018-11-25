@@ -9,7 +9,7 @@ import Dot from './Dot/Dot';
 import Component from './Component';
 
 class Slider extends Component {
-  constructor(videos) {
+  constructor(videos, onNeedNewVideos) {
     super('main', 'videos');
     this.setInitialVideoParams();
     this.videosWrapper = createDivWithClasses('inner__videos');
@@ -19,6 +19,7 @@ class Slider extends Component {
     appendChildren(this.element, [this.videosWrapper, dots]);
     this.bindEvents();
     this.onResize();
+    this.onNeedNewVideos = onNeedNewVideos;
   }
 
   setInitialVideoParams() {
@@ -29,14 +30,14 @@ class Slider extends Component {
   }
 
   createDots(number) {
-    const wrapper = createDivWithClasses('dots');
+    this.dotsWrapper = createDivWithClasses('dots');
     this.dots = [];
     for (let i = 1; i <= number; i += 1) {
       this.dots.push(new Dot(i));
     }
     this.dots[0].setActive();
-    appendChildren(wrapper, Component.getElements(this.dots));
-    return wrapper;
+    appendChildren(this.dotsWrapper, Component.getElements(this.dots));
+    return this.dotsWrapper;
   }
 
   setActiveVideo(index) {
@@ -45,6 +46,7 @@ class Slider extends Component {
     this.setDotAsActive(index);
     this.activeVideo = index;
     this.updateVideosOffset();
+    if (index >= this.videos.length - 6) this.onNeedNewVideos();
   }
 
   setDotAsInactive(index) {
@@ -175,12 +177,32 @@ class Slider extends Component {
   setMaxVideoIndex(value) {
     this.maxIndex = value;
     this.dots.forEach((dot, index) => {
-      if (index >= value) {
+      if (index > value) {
         dot.hide();
         if (dot.active) dot.setInactive();
       } else if (dot.hidden) dot.show();
     });
     this.dots[this.activeVideo].setActive();
+  }
+
+  addVideos(videos) {
+    this.videos.push(...videos.map(video => new Video(video, this.videoWidth, this.videoMargin)));
+    appendChildren(this.videosWrapper, Component.getElements(this.videos.slice(-videos.length)));
+    this.addDots(videos.length);
+    this.onResize();
+  }
+
+  addDots(number) {
+    const startIndex = this.videos.length - number;
+    for (let i = startIndex; i < this.videos.length; i += 1) {
+      this.dots.push(new Dot(i));
+    }
+    appendChildren(this.dotsWrapper, Component.getElements(this.dots.slice(-number)));
+    Component.getElements(this.dots.slice(-number)).forEach(
+      (element, index) => element.addEventListener('click', () => {
+        this.setActiveVideo(index + this.dots.length - number);
+      }),
+    );
   }
 }
 

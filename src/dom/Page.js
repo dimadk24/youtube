@@ -10,6 +10,9 @@ function getVideoIds(videos) {
   return stringIds.slice(1);
 }
 
+let nextPageToken = '';
+let sliderCreated;
+
 async function loadViews(ids) {
   const response = await fetch(`${API_URL}/videos?key=${YOUTUBE_KEY}&type=video&part=statistics&maxResults=15&id=${ids}`,
     { method: 'GET' });
@@ -18,9 +21,13 @@ async function loadViews(ids) {
 }
 
 async function loadVideos(query) {
-  const response = await fetch(`${API_URL}/search?key=${YOUTUBE_KEY}&type=video&part=snippet&maxResults=15&q=${query}`,
-    { method: 'GET' });
+  let url = `${API_URL}/search?key=${YOUTUBE_KEY}&type=video&part=snippet&maxResults=15&q=${query}`;
+  if (nextPageToken) url += `&pageToken=${nextPageToken}`;
+  const response = await fetch(url, { method: 'GET' });
   const message = await response.json();
+  // have to suppress it, cause I can't destruct it here
+  // eslint-disable-next-line prefer-destructuring
+  nextPageToken = message.nextPageToken;
   return message;
 }
 
@@ -58,17 +65,35 @@ class Page {
     const searchBar = new SearchBar(this.onStartSearch.bind(this));
     this.wrapper.appendChild(searchBar.element);
     document.body.appendChild(this.wrapper);
+    this.loadingMore = false;
   }
 
   async onStartSearch(query) {
-    const youtubeResponse = await loadVideos(query);
+    if (sliderCreated) return;
+    sliderCreated = true;
+    this.query = query;
+    const videos = await this.loadVideosWithViews(query);
+    this.slider = new Slider(videos, this.onNeedNewVideos.bind(this));
+    this.wrapper.appendChild(this.slider.element);
+  }
+
+  async loadVideosWithViews() {
+    const youtubeResponse = await loadVideos(this.query);
     let videos = convertVideos(youtubeResponse.items);
     const ids = getVideoIds(videos);
     const youtubeViews = await loadViews(ids);
     const views = convertViews(youtubeViews.items);
     videos = addViewsToVideos(videos, views);
-    const slider = new Slider(videos);
-    this.wrapper.appendChild(slider.element);
+    return videos;
+  }
+
+  async onNeedNewVideos() {
+    if (!this.loadingMore) {
+      this.loadingMore = true;
+      const videos = this.loadVideosWithViews();
+      this.slider.addVideos(videos);
+    }
+    this.loadingMore = false;
   }
 }
 
