@@ -113,6 +113,11 @@ class Slider extends Component {
     this.element.addEventListener('touchend', this.endDrag.bind(this));
     this.element.addEventListener('mouseleave', this.endDrag.bind(this));
     this.element.addEventListener('touchleave', this.endDrag.bind(this));
+    Component.getElements(this.dots).forEach(
+      (element, index) => element.addEventListener('click', () => {
+        this.setActiveVideo(index);
+      }),
+    );
   }
 
   startMouseDrag(e) {
