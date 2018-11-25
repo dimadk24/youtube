@@ -27,16 +27,13 @@ function appendChildren(elem, children) {
   });
 }
 
-function toCSS(number, type) {
-  return `${number}${type}`;
+function toPx(number) {
+  return `${number}px`;
 }
 
-function toJS(cssLength) {
-  const number = parseInt(cssLength, 10);
-  const match = cssLength.match(/[A-Za-z%]+/);
-  if (!match) return [0, 'px'];
-  const type = match[0];
-  return [number, type];
+function toNumber(cssLength) {
+  if (!cssLength.length) return 0;
+  return parseInt(cssLength.slice(0, -2), 10);
 }
 
 export {
@@ -45,6 +42,6 @@ export {
   appendChildren,
   createIcon,
   setAttributes,
-  toCSS,
-  toJS,
+  toPx,
+  toNumber,
 };

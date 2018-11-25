@@ -77,8 +77,8 @@ describe('Video', () => {
     date: 'today',
     views: 123,
   };
-  const width = [320, 'px'];
-  const margin = [50, 'px'];
+  const width = 320;
+  const margin = 50;
 
   it('should have 6 children', () => {
     const video = new Video(testVideo, width, margin);
@@ -87,21 +87,21 @@ describe('Video', () => {
 
   it('should have passed width and margin', () => {
     const video = new Video(testVideo, width, margin);
-    expect(video.getWidth()).toEqual(width);
-    expect(video.getMargin()).toEqual(margin);
+    expect(video.getWidth()).toBe(width);
+    expect(video.getMargin()).toBe(margin);
   });
 
   it('should change width', () => {
     const video = new Video(testVideo, width, margin);
-    expect(video.getMargin()).not.toEqual([500, 'px']);
-    video.setWidth(500, 'px');
-    expect(video.getWidth()).toEqual([500, 'px']);
+    expect(video.getMargin()).not.toBe(500);
+    video.setWidth(500);
+    expect(video.getWidth()).toBe(500);
   });
 
   it('should change margin', () => {
     const video = new Video(testVideo, width, margin);
-    expect(video.getMargin()).not.toEqual([100, 'px']);
-    video.setMargin(100, 'px');
-    expect(video.getMargin()).toEqual([100, 'px']);
+    expect(video.getMargin()).not.toBe(100);
+    video.setMargin(100);
+    expect(video.getMargin()).toBe(100);
   });
 });

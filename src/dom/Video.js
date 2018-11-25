@@ -3,7 +3,7 @@ import {
   createDivWithClasses,
   createElementWithClasses,
   createIcon,
-  setAttributes, toJS, toCSS,
+  setAttributes, toNumber, toPx,
 } from './helpers';
 import Component from './Component';
 
@@ -55,24 +55,24 @@ class Video extends Component {
     const paramsElements = createParams(video.author, video.date, video.views);
     const description = createDescription(video.description);
     appendChildren(this.element, [title, preview, ...paramsElements, description]);
-    this.setWidth(width[0], width[1]);
-    this.setMargin(margin[0], margin[1]);
+    this.setWidth(width);
+    this.setMargin(margin);
   }
 
-  setWidth(width, type) {
-    this.element.style.width = toCSS(width, type);
+  setWidth(width) {
+    this.element.style.width = toPx(width);
   }
 
-  setMargin(margin, type) {
-    this.element.style.marginRight = toCSS(margin, type);
+  setMargin(margin) {
+    this.element.style.marginRight = toPx(margin);
   }
 
   getWidth() {
-    return toJS(this.element.style.width);
+    return toNumber(this.element.style.width);
   }
 
   getMargin() {
-    return toJS(this.element.style.marginRight);
+    return toNumber(this.element.style.marginRight);
   }
 }
 
