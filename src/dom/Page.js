@@ -90,7 +90,7 @@ class Page {
   async onNeedNewVideos() {
     if (!this.loadingMore) {
       this.loadingMore = true;
-      const videos = this.loadVideosWithViews();
+      const videos = await this.loadVideosWithViews();
       this.slider.addVideos(videos);
     }
     this.loadingMore = false;
