@@ -5,7 +5,7 @@ import {
   toPx,
 } from './helpers';
 import Video from './Video';
-import Dot from './Dot';
+import Dot from './Dot/Dot';
 import Component from './Component';
 
 class Slider extends Component {

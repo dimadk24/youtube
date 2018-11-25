@@ -1,4 +1,4 @@
-import Dot from '../Dot';
+import Dot from './Dot';
 
 describe('Dot', () => {
   it('should create span element', () => {
