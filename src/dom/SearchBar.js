@@ -14,17 +14,21 @@ function createSearchLabel() {
 }
 
 class SearchBar extends Component {
-  constructor() {
-    super('div', 'search-bar');
+  constructor(onStartSearch) {
+    super('form', 'search-bar');
     const icon = createIcon('icon-search');
     const label = createSearchLabel();
     const input = this.createSearchInput();
     const button = this.createSearchButton();
     appendChildren(this.element, [icon, label, input, button]);
+    this.element.addEventListener('submit', (e) => {
+      e.preventDefault();
+      onStartSearch(this.searchInput.value);
+    });
   }
 
   createSearchInput() {
-    this.searchInput = createElementWithClasses('input');
+    this.searchInput = createElementWithClasses('input', 'search-input');
     setAttributes(this.searchInput, {
       type: 'text',
       id: 'search',
@@ -34,8 +38,11 @@ class SearchBar extends Component {
   }
 
   createSearchButton() {
-    this.searchButton = createElementWithClasses('button', 'search-button');
-    this.searchButton.innerText = 'Go!';
+    this.searchButton = createElementWithClasses('input', 'search-button');
+    setAttributes(this.searchButton, {
+      type: 'submit',
+      value: 'Go!',
+    });
     return this.searchButton;
   }
 }

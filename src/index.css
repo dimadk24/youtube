@@ -16,7 +16,7 @@
     position: relative;
 }
 
-.search-bar > input {
+.search-input {
     width: 80%;
     min-width: 170px;
     padding: 5px 5px 5px 32px;
@@ -107,7 +107,7 @@ img.video__preview {
 }
 
 @media (max-width: 420px) {
-    .search-bar > input {
+    .search-input {
         width: 70%;
     }
 }
