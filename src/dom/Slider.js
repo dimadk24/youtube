@@ -1,4 +1,9 @@
-import { appendChildren, createDivWithClasses, getDragEventX } from './helpers';
+import {
+  appendChildren,
+  createDivWithClasses,
+  getDragEventX,
+  toPx,
+} from './helpers';
 import Video from './Video';
 import Dot from './Dot';
 import Component from './Component';
@@ -20,6 +25,7 @@ class Slider extends Component {
     this.videoWidth = 320;
     this.videoMargin = 50;
     this.activeVideo = 0;
+    this.isDragging = false;
   }
 
   createDots(number) {
@@ -49,10 +55,14 @@ class Slider extends Component {
     this.dots[index].setActive();
   }
 
-  updateVideosOffset() {
+  updateVideosOffset(additionalOffset = 0) {
     if (this.activeVideo > this.maxIndex) this.activeVideo = this.maxIndex;
-    const offset = this.getVideoOverallWidth() * this.activeVideo;
-    this.videosWrapper.style.transform = `translate(-${offset}px)`;
+    const offset = -(this.getVideoOverallWidth() * this.activeVideo + additionalOffset);
+    this.setSliderOffset(offset);
+  }
+
+  setSliderOffset(offset) {
+    this.videosWrapper.style.transform = `translate(${toPx(offset)})`;
   }
 
   getVideoOverallWidth() {
@@ -95,25 +105,55 @@ class Slider extends Component {
 
   bindEvents() {
     window.addEventListener('resize', this.onResize.bind(this));
-    this.element.addEventListener('mousedown', this.startDrag.bind(this));
-    this.element.addEventListener('touchstart', this.startDrag.bind(this));
+    this.element.addEventListener('mousedown', this.startMouseDrag.bind(this));
+    this.element.addEventListener('touchstart', this.startDrag.bind(this), { passive: true });
+    this.element.addEventListener('mousemove', this.move.bind(this));
+    this.element.addEventListener('touchmove', this.move.bind(this), { passive: true });
     this.element.addEventListener('mouseup', this.endDrag.bind(this));
     this.element.addEventListener('touchend', this.endDrag.bind(this));
+    this.element.addEventListener('mouseleave', this.endDrag.bind(this));
+    this.element.addEventListener('touchleave', this.endDrag.bind(this));
+  }
+
+  startMouseDrag(e) {
+    e.preventDefault();
+    this.startDrag(e);
   }
 
   startDrag(e) {
-    e.preventDefault();
     this.dragEventX = getDragEventX(e);
+    this.isDragging = true;
+  }
+
+  move(e) {
+    if (this.isDragging) {
+      const diff = this.dragEventX - getDragEventX(e);
+      const sign = Math.sign(diff);
+      if (
+        (this.activeVideo === 0 && sign < 0)
+        || (this.activeVideo === this.maxIndex && sign > 0)
+      ) {
+        this.updateVideosOffset(diff / 2);
+      } else this.updateVideosOffset(diff);
+    }
   }
 
   endDrag(e) {
-    this.setTransitionDuration('300ms');
-    const diff = getDragEventX(e) - this.dragEventX;
-    const sign = Math.sign(diff);
-    if (Math.abs(diff) > this.videoWidth) {
-      const offsetCount = Math.floor(Math.abs(diff / this.videoWidth));
-      if (sign > 0) this.setActiveVideo(this.activeVideo - offsetCount);
-      else this.setActiveVideo(this.activeVideo + offsetCount);
+    if (this.isDragging) {
+      this.setTransitionDuration('300ms');
+      const diff = getDragEventX(e) - this.dragEventX;
+      const sign = Math.sign(diff);
+      if ((Math.abs(diff) <= this.videoWidth / 2)
+        || (this.activeVideo === 0 && sign > 0)
+        || (this.activeVideo === this.maxIndex && sign < 0)) {
+        this.setActiveVideo(this.activeVideo);
+      } else {
+        const offsetCount = Math.floor(Math.abs(diff / this.videoWidth));
+        if (sign > 0) this.setActiveVideo(this.activeVideo - offsetCount);
+        else this.setActiveVideo(this.activeVideo + offsetCount);
+      }
+      this.dragEventX = 0;
+      this.isDragging = false;
     }
   }
 
@@ -124,9 +164,12 @@ class Slider extends Component {
   setMaxVideoIndex(value) {
     this.maxIndex = value;
     this.dots.forEach((dot, index) => {
-      if (index > value) dot.hide();
-      else if (dot.hidden) dot.show();
+      if (index > value) {
+        dot.hide();
+        if (dot.active) dot.setInactive();
+      } else if (dot.hidden) dot.show();
     });
+    this.dots[this.activeVideo].setActive();
   }
 }
 
