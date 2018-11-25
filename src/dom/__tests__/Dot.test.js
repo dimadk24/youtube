@@ -24,12 +24,14 @@ describe('Dot', () => {
   it('should be active and have 2 classes', () => {
     const dot = new Dot(1);
     dot.setActive();
+    expect(dot.active).toBeTruthy();
     expect(dot.element.classList).toHaveLength(2);
   });
 
   it('should be inactive and have 1 class (the same it has before activeness)', () => {
     const dot = new Dot(1);
     const classBeforeSettingActive = dot.element.classList.item(0);
+    expect(dot.active).toBeFalsy();
     dot.setActive();
     dot.setInactive();
     expect(dot.element.classList).toHaveLength(1);
