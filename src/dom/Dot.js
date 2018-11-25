@@ -1,4 +1,5 @@
 import Component from './Component';
+import './Dot.css';
 
 const CLASS = 'dot';
 const ACTIVE_CLASS = 'dot--active';

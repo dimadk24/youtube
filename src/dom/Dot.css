@@ -1,0 +1,21 @@
+.dot {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    margin-right: 3px;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid black;
+    color: transparent;
+    transition-duration: 100ms;
+    cursor: pointer;
+}
+
+.dot:last-child {
+    margin-right: 0;
+}
+
+.dot--active {
+    background-color: #c33232;
+    border: none;
+}
