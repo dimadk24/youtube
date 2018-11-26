@@ -88,7 +88,7 @@ class Slider extends Component {
   }
 
   resize() {
-    this.setTransitionDuration('0s');
+    this.removeTransitionDuration();
     const windowWidth = window.innerWidth;
     const videosWrapperWidth = windowWidth * 0.9;
     if (windowWidth > 600 && windowWidth < 1000) {
@@ -134,7 +134,7 @@ class Slider extends Component {
   }
 
   startDrag(e) {
-    this.setTransitionDuration('0s');
+    this.removeTransitionDuration();
     this.dragEventX = getDragEventX(e);
     this.setDragging(true);
   }
@@ -160,7 +160,7 @@ class Slider extends Component {
 
   endDrag(e) {
     if (this.isDragging) {
-      this.setTransitionDuration('300ms');
+      this.addTransitionDuration();
       const dragDifference = getDragEventX(e) - this.dragEventX;
       const direction = getDragDirection(dragDifference);
       const dragDistance = Math.abs(dragDifference);
@@ -176,6 +176,14 @@ class Slider extends Component {
       this.dragEventX = 0;
       this.setDragging(false);
     }
+  }
+
+  addTransitionDuration() {
+    this.setTransitionDuration('300ms');
+  }
+
+  removeTransitionDuration() {
+    this.setTransitionDuration('0s');
   }
 
   setTransitionDuration(value) {
