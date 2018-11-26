@@ -1,7 +1,7 @@
 .dot {
     display: inline-block;
-    width: 23px;
-    height: 23px;
+    width: 30px;
+    height: 30px;
     margin-right: 3px;
     background-color: white;
     border-radius: 50%;
@@ -9,7 +9,7 @@
     color: transparent;
     transition-duration: 300ms;
     cursor: pointer;
-    padding-top: 2px;
+    padding-top: 5px;
 }
 
 .dot:last-child {
