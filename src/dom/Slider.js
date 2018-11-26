@@ -128,6 +128,7 @@ class Slider extends Component {
   }
 
   startDrag(e) {
+    this.setTransitionDuration('0s');
     this.dragEventX = getDragEventX(e);
     this.setDragging(true);
   }
