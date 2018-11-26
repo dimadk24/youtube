@@ -18,7 +18,7 @@ class Slider extends Component {
     const dots = this.createDots(videos.length);
     appendChildren(this.element, [this.videosWrapper, dots]);
     this.bindEvents();
-    this.onResize();
+    this.resize();
     this.onNeedNewVideos = onNeedNewVideos;
   }
 
@@ -81,7 +81,7 @@ class Slider extends Component {
     this.videos.forEach(video => video.setMargin(value));
   }
 
-  onResize() {
+  resize() {
     this.setTransitionDuration('0s');
     const windowWidth = window.innerWidth;
     const videosWrapperWidth = windowWidth * 0.9;
@@ -106,7 +106,7 @@ class Slider extends Component {
   }
 
   bindEvents() {
-    window.addEventListener('resize', this.onResize.bind(this));
+    window.addEventListener('resize', this.resize.bind(this));
     this.element.addEventListener('mousedown', this.startMouseDrag.bind(this));
     this.element.addEventListener('touchstart', this.startDrag.bind(this), { passive: true });
     this.element.addEventListener('mousemove', this.move.bind(this));
