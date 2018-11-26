@@ -65,7 +65,6 @@ class Slider extends Component {
   }
 
   updateVideosOffset(additionalOffset = 0) {
-    if (this.activeVideo > this.maxIndex) this.activeVideo = this.maxIndex;
     const offset = -(this.getVideoOverallWidth() * this.activeVideo + additionalOffset);
     this.setSliderOffset(offset);
   }
@@ -168,7 +167,7 @@ class Slider extends Component {
       if ((dragDistance <= this.videoWidth / 2)
         || (this.activeVideo === 0 && direction === DRAG_RIGHT)
         || (this.activeVideo === this.maxIndex && direction === DRAG_LEFT)) {
-        this.setActiveVideo(this.activeVideo);
+        this.updateVideosOffset();
       } else {
         const offsetCount = Math.floor(dragDistance / (this.videoWidth / 2));
         if (direction === DRAG_RIGHT) this.setActiveVideo(this.activeVideo - offsetCount);
