@@ -8,6 +8,13 @@ import Video from './Video';
 import Dot from './Dot/Dot';
 import Component from './Component';
 
+const DRAG_LEFT = -1;
+const DRAG_RIGHT = 1;
+
+function getDragDirection(dragDifference) {
+  return Math.sign(dragDifference);
+}
+
 class Slider extends Component {
   constructor(videos, onNeedNewVideos) {
     super('main', 'videos');
@@ -142,10 +149,10 @@ class Slider extends Component {
   move(e) {
     if (this.isDragging) {
       const diff = this.dragEventX - getDragEventX(e);
-      const sign = Math.sign(diff);
+      const direction = getDragDirection(diff);
       if (
-        (this.activeVideo === 0 && sign < 0)
-        || (this.activeVideo === this.maxIndex && sign > 0)
+        (this.activeVideo === 0 && direction === DRAG_LEFT)
+        || (this.activeVideo === this.maxIndex && direction === DRAG_RIGHT)
       ) {
         this.updateVideosOffset(diff / 2);
       } else this.updateVideosOffset(diff);
@@ -155,15 +162,16 @@ class Slider extends Component {
   endDrag(e) {
     if (this.isDragging) {
       this.setTransitionDuration('300ms');
-      const diff = getDragEventX(e) - this.dragEventX;
-      const sign = Math.sign(diff);
-      if ((Math.abs(diff) <= this.videoWidth / 2)
-        || (this.activeVideo === 0 && sign > 0)
-        || (this.activeVideo === this.maxIndex && sign < 0)) {
+      const dragDifference = getDragEventX(e) - this.dragEventX;
+      const direction = getDragDirection(dragDifference);
+      const dragDistance = Math.abs(dragDifference);
+      if ((dragDistance <= this.videoWidth / 2)
+        || (this.activeVideo === 0 && direction === DRAG_RIGHT)
+        || (this.activeVideo === this.maxIndex && direction === DRAG_LEFT)) {
         this.setActiveVideo(this.activeVideo);
       } else {
-        const offsetCount = Math.floor(Math.abs(diff / (this.videoWidth / 2)));
-        if (sign > 0) this.setActiveVideo(this.activeVideo - offsetCount);
+        const offsetCount = Math.floor(dragDistance / (this.videoWidth / 2));
+        if (direction === DRAG_RIGHT) this.setActiveVideo(this.activeVideo - offsetCount);
         else this.setActiveVideo(this.activeVideo + offsetCount);
       }
       this.dragEventX = 0;
