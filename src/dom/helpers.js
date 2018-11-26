@@ -41,6 +41,14 @@ function getDragEventX(e) {
   return unifiedEvent.clientX;
 }
 
+function getDragDirection(dragDifference) {
+  return Math.sign(dragDifference);
+}
+
+function getDragDistance(dragDifference) {
+  return Math.abs(dragDifference);
+}
+
 export {
   createElementWithClasses,
   createDivWithClasses,
@@ -50,4 +58,6 @@ export {
   toPx,
   toNumber,
   getDragEventX,
+  getDragDirection,
+  getDragDistance,
 };

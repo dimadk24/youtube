@@ -1,6 +1,8 @@
 import {
   appendChildren,
   createDivWithClasses,
+  getDragDirection,
+  getDragDistance,
   getDragEventX,
   toPx,
 } from './helpers';
@@ -10,10 +12,6 @@ import Component from './Component';
 
 const DRAG_LEFT = -1;
 const DRAG_RIGHT = 1;
-
-function getDragDirection(dragDifference) {
-  return Math.sign(dragDifference);
-}
 
 class Slider extends Component {
   constructor(videos, onNeedNewVideos) {
@@ -163,13 +161,13 @@ class Slider extends Component {
       this.addTransitionDuration();
       const dragDifference = getDragEventX(e) - this.dragEventX;
       const direction = getDragDirection(dragDifference);
-      const dragDistance = Math.abs(dragDifference);
-      if ((dragDistance <= this.videoWidth / 2)
+      const distance = getDragDistance(dragDifference);
+      if ((distance <= this.videoWidth / 2)
         || (this.activeVideo === 0 && direction === DRAG_RIGHT)
         || (this.activeVideo === this.maxIndex && direction === DRAG_LEFT)) {
         this.updateVideosOffset();
       } else {
-        const offsetCount = Math.floor(dragDistance / (this.videoWidth / 2));
+        const offsetCount = Math.floor(distance / (this.videoWidth / 2));
         if (direction === DRAG_RIGHT) this.setActiveVideo(this.activeVideo - offsetCount);
         else this.setActiveVideo(this.activeVideo + offsetCount);
       }
