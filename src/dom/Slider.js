@@ -13,7 +13,7 @@ class Slider extends Component {
     super('main', 'videos');
     this.setInitialVideoParams();
     this.videosWrapper = createDivWithClasses('inner__videos');
-    this.videos = videos.map(video => new Video(video, this.videoWidth, this.videoMargin));
+    this.videos = this.convertVideosToClasses(videos);
     appendChildren(this.videosWrapper, Component.getElements(this.videos));
     const dots = this.createDots(videos.length);
     appendChildren(this.element, [this.videosWrapper, dots]);
@@ -144,7 +144,7 @@ class Slider extends Component {
       const sign = Math.sign(diff);
       if (
         (this.activeVideo === 0 && sign < 0)
-        || (this.activeVideo + 1 === this.maxIndex && sign > 0)
+        || (this.activeVideo === this.maxIndex && sign > 0)
       ) {
         this.updateVideosOffset(diff / 2);
       } else this.updateVideosOffset(diff);
@@ -158,10 +158,10 @@ class Slider extends Component {
       const sign = Math.sign(diff);
       if ((Math.abs(diff) <= this.videoWidth / 2)
         || (this.activeVideo === 0 && sign > 0)
-        || (this.activeVideo + 1 === this.maxIndex && sign < 0)) {
+        || (this.activeVideo === this.maxIndex && sign < 0)) {
         this.setActiveVideo(this.activeVideo);
       } else {
-        const offsetCount = Math.floor(Math.abs(diff / this.videoWidth));
+        const offsetCount = Math.floor(Math.abs(diff / (this.videoWidth / 2)));
         if (sign > 0) this.setActiveVideo(this.activeVideo - offsetCount);
         else this.setActiveVideo(this.activeVideo + offsetCount);
       }
@@ -185,24 +185,34 @@ class Slider extends Component {
     this.dots[this.activeVideo].setActive();
   }
 
-  addVideos(videos) {
-    this.videos.push(...videos.map(video => new Video(video, this.videoWidth, this.videoMargin)));
-    appendChildren(this.videosWrapper, Component.getElements(this.videos.slice(-videos.length)));
-    this.addDots(videos.length);
-    this.onResize();
+  convertVideosToClasses(videos) {
+    return videos.map(this.createVideoClass.bind(this));
   }
 
-  addDots(number) {
-    const startIndex = this.videos.length - number;
-    for (let i = startIndex; i < this.videos.length; i += 1) {
-      this.dots.push(new Dot(i));
+  createVideoClass(video) {
+    return new Video(video, this.videoWidth, this.videoMargin);
+  }
+
+  addVideos(newVideos) {
+    const dotsStartIndex = this.videos.length;
+    const videoClasses = this.convertVideosToClasses(newVideos);
+    this.videos.push(...videoClasses);
+    appendChildren(this.videosWrapper, Component.getElements(videoClasses));
+    this.addDotsToNewVideos(dotsStartIndex);
+    this.resize();
+  }
+
+  addDotsToNewVideos(startIndex) {
+    const newDots = [];
+    for (let i = startIndex + 1; i <= this.videos.length; i += 1) {
+      newDots.push(new Dot(i));
     }
-    appendChildren(this.dotsWrapper, Component.getElements(this.dots.slice(-number)));
-    Component.getElements(this.dots.slice(-number)).forEach(
-      (element, index) => element.addEventListener('click', () => {
-        this.setActiveVideo(index + this.dots.length - number);
-      }),
-    );
+    this.dots.push(...newDots);
+    const dotElements = Component.getElements(newDots);
+    appendChildren(this.dotsWrapper, dotElements);
+    dotElements.forEach((element, dotIndex) => {
+      element.addEventListener('click', () => this.setActiveVideo(startIndex + dotIndex));
+    });
   }
 }
 
