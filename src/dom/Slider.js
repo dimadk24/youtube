@@ -28,8 +28,6 @@ class Slider extends Component {
   }
 
   setInitialVideoParams() {
-    this.videoWidth = 320;
-    this.videoMargin = 50;
     this.activeVideo = 0;
     this.setDragging(false);
   }
@@ -46,7 +44,7 @@ class Slider extends Component {
   }
 
   setActiveVideo(index) {
-    if (index < 0 || index > this.maxIndex) return;
+    if (index < 0) return;
     this.setDotAsInactive(this.activeVideo);
     this.setDotAsActive(index);
     this.activeVideo = index;
@@ -114,7 +112,6 @@ class Slider extends Component {
     const index = breakpoints.reverse().findIndex(item => windowWidth > item.minWidth);
     this.setVideosMargin(breakpoints[index].videoMargin);
     this.setVideosWidth(breakpoints[index].videoWidth);
-    this.setMaxVideoIndex(this.videos.length - index);
     this.updateVideosOffset();
   }
 
@@ -156,10 +153,7 @@ class Slider extends Component {
     if (this.isDragging) {
       const diff = this.dragEventX - getDragEventX(e);
       const direction = getDragDirection(diff);
-      if (
-        (this.activeVideo === 0 && direction === DRAG_LEFT)
-        || (this.activeVideo === this.maxIndex && direction === DRAG_RIGHT)
-      ) {
+      if (this.activeVideo === 0 && direction === DRAG_LEFT) {
         this.updateVideosOffset(diff / 2);
       } else this.updateVideosOffset(diff);
     }
@@ -172,8 +166,7 @@ class Slider extends Component {
       const direction = getDragDirection(dragDifference);
       const distance = getDragDistance(dragDifference);
       if ((distance <= this.videoWidth / 2)
-        || (this.activeVideo === 0 && direction === DRAG_RIGHT)
-        || (this.activeVideo === this.maxIndex && direction === DRAG_LEFT)) {
+        || (this.activeVideo === 0 && direction === DRAG_RIGHT)) {
         this.updateVideosOffset();
       } else {
         const offsetCount = Math.floor(distance / (this.videoWidth / 2));
@@ -195,17 +188,6 @@ class Slider extends Component {
 
   setTransitionDuration(value) {
     this.videosWrapper.style.transitionDuration = value;
-  }
-
-  setMaxVideoIndex(value) {
-    this.maxIndex = value;
-    this.dots.forEach((dot, index) => {
-      if (index > value) {
-        dot.hide();
-        if (dot.active) dot.setInactive();
-      } else if (dot.hidden) dot.show();
-    });
-    this.dots[this.activeVideo].setActive();
   }
 
   convertVideosToClasses(videos) {
