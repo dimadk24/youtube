@@ -92,8 +92,8 @@ class Page {
       this.loadingMore = true;
       const videos = await this.loadVideosWithViews();
       this.slider.addVideos(videos);
+      this.loadingMore = false;
     }
-    this.loadingMore = false;
   }
 }
 
