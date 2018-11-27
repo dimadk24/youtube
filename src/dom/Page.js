@@ -65,7 +65,7 @@ class Page {
     const searchBar = new SearchBar(this.onStartSearch.bind(this));
     this.wrapper.appendChild(searchBar.element);
     document.body.appendChild(this.wrapper);
-    this.loadingMore = false;
+    this.loading = false;
   }
 
   async onStartSearch(query) {
@@ -78,22 +78,21 @@ class Page {
   }
 
   async loadVideosWithViews() {
+    this.loading = true;
     const youtubeResponse = await loadVideos(this.query);
     let videos = convertVideos(youtubeResponse.items);
     const ids = getVideoIds(videos);
     const youtubeViews = await loadViews(ids);
     const views = convertViews(youtubeViews.items);
     videos = addViewsToVideos(videos, views);
+    this.loading = false;
     return videos;
   }
 
   async onNeedNewVideos() {
-    if (!this.loadingMore) {
-      this.loadingMore = true;
-      const videos = await this.loadVideosWithViews();
-      this.slider.addVideos(videos);
-      this.loadingMore = false;
-    }
+    if (this.loading) return;
+    const videos = await this.loadVideosWithViews();
+    this.slider.addVideos(videos);
   }
 }
 
