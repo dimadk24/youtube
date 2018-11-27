@@ -24,11 +24,13 @@ class Dot extends Component {
   }
 
   hide() {
+    if (this.hidden) return;
     this.element.classList.add(HIDDEN_CLASS);
     this.hidden = true;
   }
 
   show() {
+    if (!this.hidden) return;
     this.element.classList.remove(HIDDEN_CLASS);
     this.hidden = false;
   }
