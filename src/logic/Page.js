@@ -46,10 +46,11 @@ class Page {
   }
 
   async onStartSearch(query) {
-    if (this.slider) return;
+    if (this.slider) this.slider.clear();
     this.query = query;
     const videos = await this.loadVideosWithViews(query);
-    this.createSlider(videos);
+    if (this.slider) this.slider.addVideos(videos);
+    else this.createSlider(videos);
   }
 
   async loadVideosWithViews() {

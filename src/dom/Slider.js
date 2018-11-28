@@ -254,6 +254,14 @@ class Slider extends Component {
     appendChildren(this.videosWrapper, Component.getElements(videoClasses));
     this.resize();
   }
+
+  clear() {
+    this.videos.length = 0;
+    this.setActiveVideo(0);
+    while (this.videosWrapper.firstChild) {
+      this.videosWrapper.removeChild(this.videosWrapper.firstChild);
+    }
+  }
 }
 
 export default Slider;
