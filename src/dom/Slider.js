@@ -229,7 +229,7 @@ class Slider extends Component {
   }
 
   addTransitionDuration() {
-    this.setTransitionDuration('300ms');
+    this.setTransitionDuration('500ms');
   }
 
   removeTransitionDuration() {
