@@ -6,11 +6,15 @@ const ACTIVE_CLASS = 'dot--active';
 const HIDDEN_CLASS = 'hidden';
 
 class Dot extends Component {
-  constructor(dotNumber) {
+  constructor(text) {
     super('span', MAIN_CLASS);
-    this.element.innerText = String(dotNumber);
+    this.setText(text);
     this.active = false;
     this.hidden = false;
+  }
+
+  setText(value) {
+    this.element.innerText = String(value);
   }
 
   setActive() {

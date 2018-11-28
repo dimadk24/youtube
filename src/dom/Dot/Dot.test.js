@@ -11,7 +11,7 @@ describe('Dot', () => {
     expect(dot.element.classList).toHaveLength(1);
   });
 
-  it('should contain dot number as innerText 1', () => {
+  it('should contain passed text as innerText 1', () => {
     const dot = new Dot(1);
     expect(dot.element.innerText).toBe('1');
   });
@@ -54,5 +54,12 @@ describe('Dot', () => {
     expect(dot.hidden).toBeFalsy();
     expect(dot.element.classList).toHaveLength(1);
     expect(dot.element.classList.item(0)).toBe(classBeforeHide);
+  });
+
+  it('should change inner text', () => {
+    const dot = new Dot(1);
+    expect(dot.element.innerText).toBe('1');
+    dot.setText(2);
+    expect(dot.element.innerText).toBe('2');
   });
 });
