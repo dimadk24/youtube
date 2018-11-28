@@ -62,4 +62,21 @@ describe('Dot', () => {
     dot.setText(2);
     expect(dot.element.innerText).toBe('2');
   });
+
+  it('shouldn\'t hide (and touch dom) if it\'s already hidden', () => {
+    const dot = new Dot(1);
+    const spy = jest.spyOn(dot.element.classList, 'add');
+    dot.hide();
+    dot.hide();
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('shouldn\'t show (and touch dom) if it\'s already showed', () => {
+    const dot = new Dot(1);
+    const spy = jest.spyOn(dot.element.classList, 'remove');
+    dot.hide();
+    dot.show();
+    dot.show();
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 });
