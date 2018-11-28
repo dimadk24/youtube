@@ -1,20 +1,20 @@
 import SearchBar from '../dom/Components/SearchBar/SearchBar';
 import Slider from '../dom/Slider';
 import loadVideos from './loaders';
-import { createDivWithClasses } from '../dom/helpers/dom-helpers';
+import Component from '../dom/Component';
 
-class Page {
+class Page extends Component {
   constructor() {
-    this.wrapper = createDivWithClasses('container');
+    super('div', 'container');
     const searchBar = new SearchBar(this.onStartSearch.bind(this));
-    this.wrapper.appendChild(searchBar.element);
-    document.body.appendChild(this.wrapper);
+    this.element.appendChild(searchBar.element);
+    document.body.appendChild(this.element);
     this.loading = false;
   }
 
   createSlider(videos) {
     this.slider = new Slider(videos, this.onNeedNewVideos.bind(this));
-    this.wrapper.appendChild(this.slider.element);
+    this.element.appendChild(this.slider.element);
   }
 
   async onStartSearch(query) {
