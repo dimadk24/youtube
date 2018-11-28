@@ -22,7 +22,7 @@ describe('createSearchLabel', () => {
 describe('SearchBar', () => {
   it('should create wrapper', () => {
     const bar = new SearchBar();
-    expect(bar.element.tagName.toLowerCase()).toBe('div');
+    expect(bar.element.tagName.toLowerCase()).toBe('form');
   });
 
   it('should create children', () => {
@@ -30,7 +30,7 @@ describe('SearchBar', () => {
     expect(bar.element.children[0].tagName.toLowerCase()).toBe('i');
     expect(bar.element.children[1].tagName.toLowerCase()).toBe('label');
     expect(bar.element.children[2].tagName.toLowerCase()).toBe('input');
-    expect(bar.element.children[3].tagName.toLowerCase()).toBe('button');
+    expect(bar.element.children[3].tagName.toLowerCase()).toBe('input');
   });
 
   it('should have search input', () => {
@@ -40,6 +40,6 @@ describe('SearchBar', () => {
 
   it('should have search button', () => {
     const bar = new SearchBar();
-    expect(bar.searchButton.tagName.toLowerCase()).toBe('button');
+    expect(bar.searchButton.tagName.toLowerCase()).toBe('input');
   });
 });
