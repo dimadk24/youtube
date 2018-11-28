@@ -174,10 +174,11 @@ class Slider extends Component {
     this.element.addEventListener('touchstart', this.startDrag.bind(this), { passive: true });
     this.element.addEventListener('mousemove', this.move.bind(this));
     this.element.addEventListener('touchmove', this.move.bind(this), { passive: true });
-    this.element.addEventListener('mouseup', this.endDrag.bind(this));
-    this.element.addEventListener('touchend', this.endDrag.bind(this));
-    this.element.addEventListener('mouseleave', this.endDrag.bind(this));
-    this.element.addEventListener('touchleave', this.endDrag.bind(this));
+    const endDragHandler = this.endDrag.bind(this);
+    this.element.addEventListener('mouseup', endDragHandler);
+    this.element.addEventListener('touchend', endDragHandler);
+    this.element.addEventListener('mouseleave', endDragHandler);
+    this.element.addEventListener('touchleave', endDragHandler);
   }
 
   startMouseDrag(e) {
