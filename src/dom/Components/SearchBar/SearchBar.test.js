@@ -42,4 +42,23 @@ describe('SearchBar', () => {
     const bar = new SearchBar();
     expect(bar.searchButton.tagName.toLowerCase()).toBe('input');
   });
+
+  function submit(searchBar) {
+    searchBar.element.dispatchEvent(new Event('submit'));
+  }
+
+  it('should be submittable and callback when is submitted', () => {
+    const onStartSearch = jest.fn();
+    const bar = new SearchBar(onStartSearch);
+    submit(bar);
+    expect(onStartSearch).toBeCalled();
+  });
+
+  it('should pass search value into callback', () => {
+    const onStartSearch = jest.fn();
+    const bar = new SearchBar(onStartSearch);
+    bar.searchInput.value = 'test query';
+    submit(bar);
+    expect(onStartSearch).toBeCalledWith('test query');
+  });
 });
