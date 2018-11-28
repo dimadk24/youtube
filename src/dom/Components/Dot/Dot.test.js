@@ -46,7 +46,7 @@ describe('Dot', () => {
     expect(dot.element.classList).toHaveLength(2);
   });
 
-  it('should be visible and have 1 class (the same it has before hide)', () => {
+  it('should show after hide and have 1 class (the same it has before hide)', () => {
     const dot = new Dot(1);
     const classBeforeHide = dot.element.classList.item(0);
     dot.hide();
