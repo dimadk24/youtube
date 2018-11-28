@@ -214,7 +214,7 @@ class Slider extends Component {
       const dragDifference = getDragEventX(e) - this.dragEventX;
       const direction = getDragDirection(dragDifference);
       const distance = getDragDistance(dragDifference);
-      if ((distance <= this.videoWidth / 2)
+      if ((distance <= this.getOverallVideoWidth() / 2)
         || (this.activeVideo === 0 && direction === DRAG_RIGHT)) {
         this.updateVideosOffset();
       } else {
