@@ -9,7 +9,7 @@ import {
 } from '../../helpers/helpers';
 import Component from '../../Component';
 import './Video.css';
-import '../../../fontello/css/fontello.css';
+import '../../../../font_libs/fontello/css/fontello.css';
 
 function createVideoParam(iconName, text) {
   const wrapper = createDivWithClasses('video__param');

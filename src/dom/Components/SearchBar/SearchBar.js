@@ -7,7 +7,7 @@ import {
 import Component from '../../Component';
 import './SearchBar.css';
 import '../../../utils.css';
-import '../../../fontello/css/fontello.css';
+import '../../../../font_libs/fontello/css/fontello.css';
 
 function createSearchLabel() {
   const label = createElementWithClasses('label', 'visually-hidden');
