@@ -3,7 +3,7 @@ import {
   createElementWithClasses,
   createIcon,
   setAttributes,
-} from '../../helpers/helpers';
+} from '../../helpers/dom-helpers';
 import Component from '../../Component';
 import './SearchBar.css';
 import '../../../utils.css';

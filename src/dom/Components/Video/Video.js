@@ -6,7 +6,7 @@ import {
   setAttributes,
   toNumber,
   toPx,
-} from '../../helpers/helpers';
+} from '../../helpers/dom-helpers';
 import Component from '../../Component';
 import './Video.css';
 import '../../../../font_libs/fontello/css/fontello.css';

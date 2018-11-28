@@ -1,4 +1,4 @@
 import './index.css';
-import page from './dom/Page';
+import page from './logic/Page';
 
 page();

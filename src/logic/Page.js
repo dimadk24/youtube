@@ -1,14 +1,15 @@
-import { createDivWithClasses } from './helpers/helpers';
-import SearchBar from './Components/SearchBar/SearchBar';
-import Slider from './Slider';
+import { createDivWithClasses } from '../dom/helpers/dom-helpers';
+import SearchBar from '../dom/Components/SearchBar/SearchBar';
+import Slider from '../dom/Slider';
+import {
+  getVideoIds,
+  addViewsToVideos,
+  convertVideos,
+  convertViews,
+} from './logic-helpers';
 
 const YOUTUBE_KEY = 'AIzaSyAoxmNlzlKwuTNRMvWITXvtFpc-7vqfcr8';
 const API_URL = 'https://www.googleapis.com/youtube/v3';
-
-function getVideoIds(videos) {
-  const stringIds = videos.reduce((accumulator, video) => `${accumulator},${String(video.id)}`, '');
-  return stringIds.slice(1);
-}
 
 let nextPageToken = '';
 let sliderCreated;
@@ -29,34 +30,6 @@ async function loadVideos(query) {
   // eslint-disable-next-line prefer-destructuring
   nextPageToken = message.nextPageToken;
   return message;
-}
-
-function convertVideos(youtubeVideos) {
-  return youtubeVideos.map((video) => {
-    const { snippet } = video;
-    return {
-      id: video.id.videoId,
-      link: `https://youtube.com/watch?v=${video.id.videoId}`,
-      title: snippet.title,
-      preview: snippet.thumbnails.medium.url,
-      author: snippet.channelTitle,
-      date: snippet.publishedAt,
-      views: 0,
-      description: snippet.description,
-    };
-  });
-}
-
-function addViewsToVideos(videos, views) {
-  return videos.map((video, index) => {
-    const newVideo = video;
-    newVideo.views = views[index];
-    return video;
-  });
-}
-
-function convertViews(youtubeViews) {
-  return youtubeViews.map(view => view.statistics.viewCount);
 }
 
 class Page {

@@ -3,7 +3,7 @@ import {
   createDivWithClasses,
   createElementWithClasses,
   createIcon, setAttributes, toPx, toNumber,
-} from './helpers';
+} from './dom-helpers';
 
 describe('createElementWithClasses', () => {
   it('should return instance of node', () => {

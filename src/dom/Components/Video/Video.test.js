@@ -5,7 +5,7 @@ import Video, {
   createTitle,
   createVideoParam,
 } from './Video';
-import * as helpers from '../../helpers/helpers';
+import * as helpers from '../../helpers/dom-helpers';
 
 
 describe('createVideoParam', () => {

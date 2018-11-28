@@ -5,7 +5,7 @@ import {
   getDragDistance,
   getDragEventX,
   toPx,
-} from './helpers/helpers';
+} from './helpers/dom-helpers';
 import Video from './Components/Video/Video';
 import Dot from './Components/Dot/Dot';
 import Component from './Component';
