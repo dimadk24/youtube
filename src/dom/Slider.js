@@ -214,14 +214,15 @@ class Slider extends Component {
       const dragDifference = getDragEventX(e) - this.dragEventX;
       const direction = getDragDirection(dragDifference);
       const distance = getDragDistance(dragDifference);
-      if ((distance <= this.getOverallVideoWidth() / 2)
-        || (this.activeVideo === 0 && direction === DRAG_RIGHT)) {
-        this.updateVideosOffset();
-      } else {
-        const offsetCount = Math.floor(distance / (this.videoWidth / 2));
-        if (direction === DRAG_RIGHT) this.setActiveVideo(this.activeVideo - offsetCount);
-        else this.setActiveVideo(this.activeVideo + offsetCount);
+      let offsetCount = 0;
+      while (!(distance > this.getOverallVideoWidth() * (offsetCount - 0.5)
+        && distance <= this.getOverallVideoWidth() * (offsetCount + 0.5))) {
+        offsetCount += 1;
       }
+      if (offsetCount === 0 || (this.activeVideo === 0 && direction === DRAG_RIGHT)) {
+        this.updateVideosOffset();
+      } else if (direction === DRAG_RIGHT) this.setActiveVideo(this.activeVideo - offsetCount);
+      else this.setActiveVideo(this.activeVideo + offsetCount);
       this.dragEventX = 0;
       this.setDragging(false);
     }
