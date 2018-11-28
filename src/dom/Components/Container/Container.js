@@ -9,7 +9,6 @@ class Container extends Component {
     super('div', 'container');
     const searchBar = new SearchBar(this.onStartSearch.bind(this));
     this.element.appendChild(searchBar.element);
-    document.body.appendChild(this.element);
     this.loading = false;
   }
 
@@ -39,6 +38,4 @@ class Container extends Component {
   }
 }
 
-export default function container() {
-  return new Container();
-}
+export default Container;

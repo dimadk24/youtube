@@ -1,3 +1,4 @@
-import container from './dom/Components/Container/Container';
+import Container from './dom/Components/Container/Container';
 
-container();
+const container = new Container();
+document.body.appendChild(container.element);
