@@ -114,7 +114,7 @@ class Slider extends Component {
   }
 
   updateVideosOffset(additionalOffset = 0) {
-    const offset = -(this.getVideoOverallWidth() * this.activeVideo + additionalOffset);
+    const offset = -(this.getOverallVideoWidth() * this.activeVideo + additionalOffset);
     this.setSliderOffset(offset);
   }
 
@@ -122,7 +122,7 @@ class Slider extends Component {
     this.videosWrapper.style.transform = `translate(${toPx(offset)})`;
   }
 
-  getVideoOverallWidth() {
+  getOverallVideoWidth() {
     return this.videoWidth + this.videoMargin;
   }
 
