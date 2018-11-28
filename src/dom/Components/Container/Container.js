@@ -1,5 +1,5 @@
 import SearchBar from '../SearchBar/SearchBar';
-import Slider from '../../Slider';
+import VideosWrapper from '../VideosWrapper/VideosWrapper';
 import loadVideos from '../../../loaders/loaders';
 import Component from '../../Component';
 import './Container.css';
@@ -14,7 +14,7 @@ class Container extends Component {
   }
 
   createSlider(videos) {
-    this.slider = new Slider(videos, this.onNeedNewVideos.bind(this));
+    this.slider = new VideosWrapper(videos, this.onNeedNewVideos.bind(this));
     this.element.appendChild(this.slider.element);
   }
 

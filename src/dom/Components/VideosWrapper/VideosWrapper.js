@@ -5,17 +5,18 @@ import {
   getDragDistance,
   getDragEventX,
   toPx,
-} from './helpers/dom-helpers';
-import Video from './Components/Video/Video';
-import Component from './Component';
-import DotsWrapper from './Components/DotsWrapper/DotsWrapper';
+} from '../../helpers/dom-helpers';
+import Video from '../Video/Video';
+import Component from '../../Component';
+import DotsWrapper from '../DotsWrapper/DotsWrapper';
+import './VideosWrapper.css';
 
 const DRAG_LEFT = -1;
 const DRAG_RIGHT = 1;
 const GO_BACK_DOUBLE_DOT = 0;
 const GO_BACK_ONCE_DOT = 1;
 
-class Slider extends Component {
+class VideosWrapper extends Component {
   constructor(videos, onNeedNewVideos) {
     super('main', 'videos');
     this.setInitialVideoParams();
@@ -208,4 +209,4 @@ class Slider extends Component {
   }
 }
 
-export default Slider;
+export default VideosWrapper;
