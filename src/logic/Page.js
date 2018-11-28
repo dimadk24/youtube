@@ -12,7 +12,6 @@ const YOUTUBE_KEY = 'AIzaSyAoxmNlzlKwuTNRMvWITXvtFpc-7vqfcr8';
 const API_URL = 'https://www.googleapis.com/youtube/v3';
 
 let nextPageToken = '';
-let sliderCreated;
 
 async function loadViews(ids) {
   const response = await fetch(`${API_URL}/videos?key=${YOUTUBE_KEY}&type=video&part=statistics&maxResults=15&id=${ids}`,
@@ -41,13 +40,16 @@ class Page {
     this.loading = false;
   }
 
-  async onStartSearch(query) {
-    if (sliderCreated) return;
-    sliderCreated = true;
-    this.query = query;
-    const videos = await this.loadVideosWithViews(query);
+  createSlider(videos) {
     this.slider = new Slider(videos, this.onNeedNewVideos.bind(this));
     this.wrapper.appendChild(this.slider.element);
+  }
+
+  async onStartSearch(query) {
+    if (this.slider) return;
+    this.query = query;
+    const videos = await this.loadVideosWithViews(query);
+    this.createSlider(videos);
   }
 
   async loadVideosWithViews() {
