@@ -19,15 +19,14 @@ class Page extends Component {
 
   async onStartSearch(query) {
     if (this.slider) this.slider.clear();
-    this.query = query;
     const videos = await this.loadVideosWithViews(query);
     if (this.slider) this.slider.addVideos(videos);
     else this.createSlider(videos);
   }
 
-  async loadVideosWithViews() {
+  async loadVideosWithViews(query) {
     this.loading = true;
-    const videos = await loadVideos(this.query);
+    const videos = await loadVideos(query);
     this.loading = false;
     return videos;
   }
