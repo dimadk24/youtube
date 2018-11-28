@@ -7,8 +7,8 @@ import {
   toPx,
 } from './helpers/dom-helpers';
 import Video from './Components/Video/Video';
-import Dot from './Components/Dot/Dot';
 import Component from './Component';
+import DotsWrapper from './Components/DotsWrapper/DotsWrapper';
 
 const DRAG_LEFT = -1;
 const DRAG_RIGHT = 1;
@@ -22,8 +22,8 @@ class Slider extends Component {
     this.videosWrapper = createDivWithClasses('inner__videos');
     this.videos = this.convertVideosToClasses(videos);
     appendChildren(this.videosWrapper, Component.getElements(this.videos));
-    const dots = this.createDots(videos.length);
-    appendChildren(this.element, [this.videosWrapper, dots]);
+    const dotsWrapper = this.createDotsWrapper();
+    appendChildren(this.element, [this.videosWrapper, dotsWrapper]);
     this.bindEvents();
     this.resize();
     this.onNeedNewVideos = onNeedNewVideos;
@@ -34,83 +34,27 @@ class Slider extends Component {
     this.setDragging(false);
   }
 
-  createDotsWithValues(options) {
-    const dots = [];
-    options.forEach(option => dots.push(new Dot(option.text)));
-    dots.forEach((dot, index) => dot.element.addEventListener('click', () => {
-      this.setActiveVideo(this.activeVideo + options[index].actionOffset);
-    }));
-    return dots;
-  }
-
-  createGoBackDots() {
-    const options = [
-      {
-        text: '<<', actionOffset: -2,
-      },
-      {
-        text: '<',
-        actionOffset: -1,
-      },
-    ];
-    return this.createDotsWithValues(options);
-  }
-
-  createMainDot() {
-    this.mainDot = new Dot(this.activeVideo + 1);
-    this.mainDot.setActive();
-    return this.mainDot;
-  }
-
-  createGoForwardDots() {
-    const options = [
-      {
-        text: '>',
-        actionOffset: 1,
-      },
-      {
-        text: '>>',
-        actionOffset: 2,
-      },
-    ];
-    return this.createDotsWithValues(options);
-  }
-
-  createDots() {
-    this.dotsWrapper = createDivWithClasses('dots');
-    const goBackDots = this.createGoBackDots();
-    goBackDots.forEach(dot => dot.hide());
-    this.dots = [
-      ...goBackDots,
-      this.createMainDot(),
-      ...this.createGoForwardDots(),
-    ];
-    appendChildren(this.dotsWrapper, Component.getElements(this.dots));
-    return this.dotsWrapper;
-  }
-
-  hideDots(...indexes) {
-    indexes.forEach(index => this.dots[index].hide());
-  }
-
-  showDots(...indexes) {
-    indexes.forEach(index => this.dots[index].show());
+  createDotsWrapper() {
+    this.dotsWrapper = new DotsWrapper(this.activeVideo + 1, (offset) => {
+      this.setActiveVideo(this.activeVideo + offset);
+    });
+    return this.dotsWrapper.element;
   }
 
   setActiveVideo(index) {
     if (index < 0) return;
     if (this.activeVideo === 1 && index >= 2) {
-      this.showDots(GO_BACK_DOUBLE_DOT, GO_BACK_ONCE_DOT);
+      this.dotsWrapper.showDots(GO_BACK_DOUBLE_DOT, GO_BACK_ONCE_DOT);
     }
     if (this.activeVideo === 0 && index >= 1) {
-      this.showDots(GO_BACK_ONCE_DOT);
+      this.dotsWrapper.showDots(GO_BACK_ONCE_DOT);
     }
     this.activeVideo = index;
     this.updateVideosOffset();
     if (index >= this.videos.length - 6) this.onNeedNewVideos();
-    this.mainDot.setText(this.activeVideo + 1);
-    if (index === 0) this.hideDots(GO_BACK_DOUBLE_DOT, GO_BACK_ONCE_DOT);
-    else if (index === 1) this.hideDots(GO_BACK_DOUBLE_DOT);
+    this.dotsWrapper.setMainDotText(this.activeVideo + 1);
+    if (index === 0) this.dotsWrapper.hideDots(GO_BACK_DOUBLE_DOT, GO_BACK_ONCE_DOT);
+    else if (index === 1) this.dotsWrapper.hideDots(GO_BACK_DOUBLE_DOT);
   }
 
   updateVideosOffset(additionalOffset = 0) {
