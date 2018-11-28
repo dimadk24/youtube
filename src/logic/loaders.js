@@ -29,8 +29,8 @@ async function loadOnlyVideos(query) {
 }
 
 async function loadVideos(query) {
-  const youtubeResponse = await loadOnlyVideos(query);
-  let videos = convertVideos(youtubeResponse.items);
+  const youtubeVideos = await loadOnlyVideos(query);
+  let videos = convertVideos(youtubeVideos.items);
   const ids = getVideoIds(videos);
   const youtubeViews = await loadOnlyViews(ids);
   const views = convertViews(youtubeViews.items);
