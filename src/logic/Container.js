@@ -3,7 +3,7 @@ import Slider from '../dom/Slider';
 import loadVideos from './loaders';
 import Component from '../dom/Component';
 
-class Page extends Component {
+class Container extends Component {
   constructor() {
     super('div', 'container');
     const searchBar = new SearchBar(this.onStartSearch.bind(this));
@@ -38,6 +38,6 @@ class Page extends Component {
   }
 }
 
-export default function page() {
-  return new Page();
+export default function container() {
+  return new Container();
 }
