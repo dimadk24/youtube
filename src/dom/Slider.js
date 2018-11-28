@@ -12,6 +12,8 @@ import Component from './Component';
 
 const DRAG_LEFT = -1;
 const DRAG_RIGHT = 1;
+const GO_BACK_DOUBLE_DOT = 0;
+const GO_BACK_ONCE_DOT = 1;
 
 class Slider extends Component {
   constructor(videos, onNeedNewVideos) {
@@ -32,32 +34,83 @@ class Slider extends Component {
     this.setDragging(false);
   }
 
-  createDots(number) {
+  createDotsWithValues(options) {
+    const dots = [];
+    options.forEach(option => dots.push(new Dot(option.text)));
+    dots.forEach((dot, index) => dot.element.addEventListener('click', () => {
+      this.setActiveVideo(this.activeVideo + options[index].actionOffset);
+    }));
+    return dots;
+  }
+
+  createGoBackDots() {
+    const options = [
+      {
+        text: '<<', actionOffset: -2,
+      },
+      {
+        text: '<',
+        actionOffset: -1,
+      },
+    ];
+    return this.createDotsWithValues(options);
+  }
+
+  createMainDot() {
+    this.mainDot = new Dot(this.activeVideo + 1);
+    this.mainDot.setActive();
+    return this.mainDot;
+  }
+
+  createGoForwardDots() {
+    const options = [
+      {
+        text: '>',
+        actionOffset: 1,
+      },
+      {
+        text: '>>',
+        actionOffset: 2,
+      },
+    ];
+    return this.createDotsWithValues(options);
+  }
+
+  createDots() {
     this.dotsWrapper = createDivWithClasses('dots');
-    this.dots = [];
-    for (let i = 1; i <= number; i += 1) {
-      this.dots.push(new Dot(i));
-    }
-    this.dots[0].setActive();
+    const goBackDots = this.createGoBackDots();
+    goBackDots.forEach(dot => dot.hide());
+    this.dots = [
+      ...goBackDots,
+      this.createMainDot(),
+      ...this.createGoForwardDots(),
+    ];
     appendChildren(this.dotsWrapper, Component.getElements(this.dots));
     return this.dotsWrapper;
   }
 
+  hideDots(...indexes) {
+    indexes.forEach(index => this.dots[index].hide());
+  }
+
+  showDots(...indexes) {
+    indexes.forEach(index => this.dots[index].show());
+  }
+
   setActiveVideo(index) {
     if (index < 0) return;
-    this.setDotAsInactive(this.activeVideo);
-    this.setDotAsActive(index);
+    if (this.activeVideo === 1 && index >= 2) {
+      this.showDots(GO_BACK_DOUBLE_DOT, GO_BACK_ONCE_DOT);
+    }
+    if (this.activeVideo === 0 && index >= 1) {
+      this.showDots(GO_BACK_ONCE_DOT);
+    }
     this.activeVideo = index;
     this.updateVideosOffset();
     if (index >= this.videos.length - 6) this.onNeedNewVideos();
-  }
-
-  setDotAsInactive(index) {
-    this.dots[index].setInactive();
-  }
-
-  setDotAsActive(index) {
-    this.dots[index].setActive();
+    this.mainDot.setText(this.activeVideo + 1);
+    if (index === 0) this.hideDots(GO_BACK_DOUBLE_DOT, GO_BACK_ONCE_DOT);
+    else if (index === 1) this.hideDots(GO_BACK_DOUBLE_DOT);
   }
 
   updateVideosOffset(additionalOffset = 0) {
@@ -125,11 +178,6 @@ class Slider extends Component {
     this.element.addEventListener('touchend', this.endDrag.bind(this));
     this.element.addEventListener('mouseleave', this.endDrag.bind(this));
     this.element.addEventListener('touchleave', this.endDrag.bind(this));
-    Component.getElements(this.dots).forEach(
-      (element, index) => element.addEventListener('click', () => {
-        this.setActiveVideo(index);
-      }),
-    );
   }
 
   startMouseDrag(e) {
@@ -199,25 +247,10 @@ class Slider extends Component {
   }
 
   addVideos(newVideos) {
-    const dotsStartIndex = this.videos.length;
     const videoClasses = this.convertVideosToClasses(newVideos);
     this.videos.push(...videoClasses);
     appendChildren(this.videosWrapper, Component.getElements(videoClasses));
-    this.addDotsToNewVideos(dotsStartIndex);
     this.resize();
-  }
-
-  addDotsToNewVideos(startIndex) {
-    const newDots = [];
-    for (let i = startIndex + 1; i <= this.videos.length; i += 1) {
-      newDots.push(new Dot(i));
-    }
-    this.dots.push(...newDots);
-    const dotElements = Component.getElements(newDots);
-    appendChildren(this.dotsWrapper, dotElements);
-    dotElements.forEach((element, dotIndex) => {
-      element.addEventListener('click', () => this.setActiveVideo(startIndex + dotIndex));
-    });
   }
 }
 
