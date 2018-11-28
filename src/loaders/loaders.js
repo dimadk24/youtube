@@ -3,7 +3,7 @@ import {
   addViewsToVideos,
   convertVideos,
   convertViews,
-} from './logic-helpers';
+} from './loaders-helpers';
 
 const YOUTUBE_KEY = 'AIzaSyAoxmNlzlKwuTNRMvWITXvtFpc-7vqfcr8';
 const API_URL = 'https://www.googleapis.com/youtube/v3';

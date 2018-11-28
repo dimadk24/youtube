@@ -1,6 +1,6 @@
 import SearchBar from '../SearchBar/SearchBar';
 import Slider from '../../Slider';
-import loadVideos from '../../../logic/loaders';
+import loadVideos from '../../../loaders/loaders';
 import Component from '../../Component';
 import './Container.css';
 

@@ -4,7 +4,7 @@ import {
   convertViews,
   getLinkToVideo,
   getVideoIds,
-} from '../logic-helpers';
+} from '../loaders-helpers';
 
 describe('getVideoIds', () => {
   it('should get video ids 1', () => {
