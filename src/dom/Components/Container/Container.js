@@ -1,3 +1,4 @@
+import '@babel/polyfill/noConflict';
 import SearchBar from '../SearchBar/SearchBar';
 import VideosWrapper from '../VideosWrapper/VideosWrapper';
 import loadVideos from '../../../loaders/loaders';
@@ -19,12 +20,12 @@ class Container extends Component {
 
   async onStartSearch(query) {
     if (this.slider) this.slider.clear();
-    const videos = await this.loadVideosWithViews(query);
+    const videos = await this.loadVideos(query);
     if (this.slider) this.slider.addVideos(videos);
     else this.createSlider(videos);
   }
 
-  async loadVideosWithViews(query) {
+  async loadVideos(query) {
     this.loading = true;
     const videos = await loadVideos(query);
     this.loading = false;
@@ -33,7 +34,7 @@ class Container extends Component {
 
   async onNeedNewVideos() {
     if (this.loading) return;
-    const videos = await this.loadVideosWithViews();
+    const videos = await this.loadVideos();
     this.slider.addVideos(videos);
   }
 }
