@@ -1,4 +1,4 @@
 import './index.css';
-import container from './logic/Container';
+import container from './dom/Components/Container/Container';
 
 container();

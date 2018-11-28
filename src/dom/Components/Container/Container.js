@@ -1,7 +1,8 @@
-import SearchBar from '../dom/Components/SearchBar/SearchBar';
-import Slider from '../dom/Slider';
-import loadVideos from './loaders';
-import Component from '../dom/Component';
+import SearchBar from '../SearchBar/SearchBar';
+import Slider from '../../Slider';
+import loadVideos from '../../../logic/loaders';
+import Component from '../../Component';
+import './Container.css';
 
 class Container extends Component {
   constructor() {
