@@ -4,8 +4,8 @@ import Video, {
   createPreview,
   createTitle,
   createVideoParam,
-} from '../Video';
-import * as helpers from '../helpers';
+} from './Video';
+import * as helpers from '../../helpers/helpers';
 
 
 describe('createVideoParam', () => {

@@ -3,10 +3,13 @@ import {
   createDivWithClasses,
   createElementWithClasses,
   createIcon,
-  setAttributes, toNumber, toPx,
-} from './helpers';
-import Component from './Component';
-import '../fontello/css/fontello.css';
+  setAttributes,
+  toNumber,
+  toPx,
+} from '../../helpers/helpers';
+import Component from '../../Component';
+import './Video.css';
+import '../../../fontello/css/fontello.css';
 
 function createVideoParam(iconName, text) {
   const wrapper = createDivWithClasses('video__param');

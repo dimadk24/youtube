@@ -1,4 +1,4 @@
-import SearchBar, { createSearchLabel } from '../SearchBar';
+import SearchBar, { createSearchLabel } from './SearchBar';
 
 describe('createSearchLabel', () => {
   it('should create hidden search label', () => {

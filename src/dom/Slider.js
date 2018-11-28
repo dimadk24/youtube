@@ -5,9 +5,9 @@ import {
   getDragDistance,
   getDragEventX,
   toPx,
-} from './helpers';
-import Video from './Video';
-import Dot from './Dot/Dot';
+} from './helpers/helpers';
+import Video from './Components/Video/Video';
+import Dot from './Components/Dot/Dot';
 import Component from './Component';
 
 const DRAG_LEFT = -1;

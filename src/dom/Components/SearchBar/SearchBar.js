@@ -3,10 +3,11 @@ import {
   createElementWithClasses,
   createIcon,
   setAttributes,
-} from './helpers';
-import Component from './Component';
-import '../utils.css';
-import '../fontello/css/fontello.css';
+} from '../../helpers/helpers';
+import Component from '../../Component';
+import './SearchBar.css';
+import '../../../utils.css';
+import '../../../fontello/css/fontello.css';
 
 function createSearchLabel() {
   const label = createElementWithClasses('label', 'visually-hidden');

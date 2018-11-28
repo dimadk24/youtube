@@ -1,5 +1,5 @@
-import { createDivWithClasses } from './helpers';
-import SearchBar from './SearchBar';
+import { createDivWithClasses } from './helpers/helpers';
+import SearchBar from './Components/SearchBar/SearchBar';
 import Slider from './Slider';
 
 const YOUTUBE_KEY = 'AIzaSyAoxmNlzlKwuTNRMvWITXvtFpc-7vqfcr8';

@@ -1,4 +1,4 @@
-import { createElementWithClasses } from './helpers';
+import { createElementWithClasses } from './helpers/helpers';
 
 class Component {
   constructor(elementName, ...classes) {

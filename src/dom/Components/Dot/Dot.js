@@ -1,4 +1,4 @@
-import Component from '../Component';
+import Component from '../../Component';
 import './Dot.css';
 
 const MAIN_CLASS = 'dot';
