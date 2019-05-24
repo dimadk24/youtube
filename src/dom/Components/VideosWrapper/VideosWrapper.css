@@ -1,0 +1,8 @@
+.videos {
+    margin-top: 20px;
+    overflow-x: hidden;
+}
+
+.inner__videos {
+    display: flex;
+}

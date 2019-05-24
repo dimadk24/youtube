@@ -1,0 +1,53 @@
+{
+  "name": "youtube-client",
+  "version": "1.0.0",
+  "description": "Rolling Scopes School youtube task",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DimaDK24/youtube.git"
+  },
+  "author": "DimaDK",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DimaDK24/youtube/issues"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.css$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  },
+  "homepage": "https://github.com/DimaDK24/youtube#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-loader": "^8.0.4",
+    "clean-webpack-plugin": "^1.0.0",
+    "css-loader": "^1.0.1",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-import": "^2.14.0",
+    "file-loader": "^2.0.0",
+    "gh-pages": "^2.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^23.6.0",
+    "regenerator-runtime": "^0.13.1",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "webpack-merge": "^4.1.4"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0"
+  }
+}

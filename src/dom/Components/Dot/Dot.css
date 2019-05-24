@@ -1,0 +1,26 @@
+.dot {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-right: 3px;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid black;
+    color: transparent;
+    transition-duration: 300ms;
+    cursor: pointer;
+    padding-top: 5px;
+}
+
+.dot:last-child {
+    margin-right: 0;
+}
+
+.dot--active {
+    background-color: #c33232;
+    border: none;
+}
+
+.videos--swiping .dot{
+    color: #19af2d
+}

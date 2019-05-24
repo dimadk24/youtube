@@ -1,0 +1,40 @@
+.video {
+    flex-shrink: 0;
+    text-align: center;
+}
+
+a.video__title {
+    display: block;
+    min-height: 37px;
+    color: black;
+    text-decoration: none;
+    transition-duration: 100ms;
+}
+
+a.video__title:hover,
+a.video__title:active {
+    color: #0722b1;
+}
+
+img.video__preview {
+    width: 100%;
+    max-width: 320px;
+    max-height: 180px;
+    pointer-events: none;
+}
+
+.video__param {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.video__param__value {
+    margin-left: 10px;
+}
+
+.video__description {
+    width: 90%;
+    margin: 0 auto;
+    text-align: left;
+    overflow: hidden;
+}
