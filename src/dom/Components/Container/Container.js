@@ -20,7 +20,8 @@ class Container extends Component {
 
   async onStartSearch(query) {
     if (this.slider) this.slider.clear();
-    const videos = await this.loadVideos(query);
+    this.query = query;
+    const videos = await this.loadVideos(this.query);
     if (this.slider) this.slider.addVideos(videos);
     else this.createSlider(videos);
   }
@@ -34,7 +35,7 @@ class Container extends Component {
 
   async onNeedNewVideos() {
     if (this.loading) return;
-    const videos = await this.loadVideos();
+    const videos = await this.loadVideos(this.query);
     this.slider.addVideos(videos);
   }
 }
